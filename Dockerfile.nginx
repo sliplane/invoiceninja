@@ -1,0 +1,10 @@
+FROM nginx:latest
+
+COPY ./config/nginx/in-vhost.conf /etc/nginx/conf.d/in-vhost.conf
+
+ARG ININJA_APP_HOST
+
+# Replace the placeholder in the vhost config with the actual environment variable value
+RUN sed -i 's/app:9000/'"${ININJA_APP_HOST}:9000"'/g' /etc/nginx/conf.d/in-vhost.conf
+
+EXPOSE 80
